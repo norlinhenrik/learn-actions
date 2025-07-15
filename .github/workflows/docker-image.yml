@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the Docker image
-        run:
+        run: |
           docker build . --file Dockerfile \
             --tag ghcr.io/${{ github.repository }}/my-image:$(date +%Y-%m-%d) \
             --tag ghcr.io/${{ github.repository }}/my-image:latest

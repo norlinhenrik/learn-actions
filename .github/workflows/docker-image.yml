@@ -28,7 +28,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile \
+          docker build . --file DockerfileOdoo \
             --tag ghcr.io/${{ github.repository }}/my-image:$(date +%Y-%m-%d) \
             --tag ghcr.io/${{ github.repository }}/my-image:latest
 

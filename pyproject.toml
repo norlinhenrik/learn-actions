@@ -1,0 +1,54 @@
+
+# we use the hatch-odoo build backend which knows how to detect dependencies
+# from Odoo addons manifests
+[build-system]
+requires = ["hatchling", "hatch-odoo"]
+build-backend = "hatchling.build"
+
+[project]
+name = "18c"
+version = "0.1.0"
+description = "18 Core"
+readme = "README.md"
+requires-python = "==3.12.*"
+dynamic = ["dependencies"]
+
+# tell uv when dependencies may change
+[tool.uv]
+cache-keys = [
+    { file = "pyproject.toml" },
+]
+
+[tool.hatch.build]
+packages = ["odoo"]
+
+# Enable the hatch-odoo metadata hook to generate dependencies from addons manifests.
+[tool.hatch.metadata.hooks.odoo-addons-dependencies]
+
+[tool.hatch-odoo]
+# dependencies that are not in the addons manifest
+dependencies = [
+    "odoo==18.0.*",
+    # Add some constraints to Odoo deps that should be in their setup.py
+    "lxml[html_clean]>=5.2",
+    "setuptools<71",
+    "werkzeug==3.0.*",
+    "click-odoo-contrib",
+    # # odoo/community
+    # "asn1crypto",
+    # "cryptography",
+    # "geoip2",
+    # # ldap -> python-ldap
+    # "pdfminer",
+    # "phonenumbers",
+    # "pyOpenSSL",
+    # "pyserial",
+    # "python-ldap",
+    # "pyusb",
+    # "qrcode",
+    # "PyPDF2==1.28.6",
+]
+addons_dirs = ["."] # addons # odoo/design-themes & odoo/industry cannot be included here since they have "wrong" version number format.
+
+[tool.uv.sources]
+odoo = { git = "https://github.com/OCA/OCB", branch = "18.0" }
